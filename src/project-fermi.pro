@@ -1,6 +1,5 @@
 QT += core gui opengl
 
-LIBS += -lbox2d
 
 DEFINES += PLATFORM_IS_QT
 
@@ -8,16 +7,22 @@ HEADERS += \
     platform/platform.h \
     gameengine/gameengine.h \
     platform/qtplatform/qtplatform.h \
-    platform/qtplatform/graphicsscene.h
+    platform/qtplatform/graphicsscene.h \
+    entity/entity.h \
+    entity/ball.h \
+    entity/ground.h
 
 SOURCES += \
     platform/platform.cpp \
     main.cpp \
     gameengine/gameengine.cpp \
     platform/qtplatform/qtplatform.cpp \
-    platform/qtplatform/graphicsscene.cpp
+    platform/qtplatform/graphicsscene.cpp \
+    entity/entity.cpp \
+    entity/ball.cpp \
+    entity/ground.cpp
 
-# Change and uncomment the following lines if Box2D resides in a different directory
-#INCLUDEPATH += ../libs/Box2D_v2.2.1
-#INCLUDEPATH += ../libs/Box2D_v2.2.1/Box2D
-#LIBPATH += ../libs/Box2D_v2.2.1/Build/gmake/obj/Debug/Box2D
+# Box2D should be placed in a libs/ folder next to src/
+INCLUDEPATH += ../libs/Box2D_v2.2.1
+INCLUDEPATH += ../libs/Box2D_v2.2.1/Box2D
+LIBS += -L../libs/Box2D_v2.2.1/Build/gmake/bin/Debug -lBox2D

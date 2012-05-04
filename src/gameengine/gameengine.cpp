@@ -2,6 +2,9 @@
 
 #include <Box2D.h>
 #include <iostream>
+#include "platform/platform.h"
+#include "entity/ball.h"
+#include "entity/ground.h"
 
 /*!
   The GameEngine class contains all the logic to run the game or testbed.
@@ -13,17 +16,56 @@
     in time. Putting things in modules from the beginning should make it easier to
     maintain (and quicker to compile).
 */
-GameEngine::GameEngine(int argc, char* argv[])
+GameEngine::GameEngine(Platform *platform_, int argc, char* argv[]) :
+    m_platform(platform_)
 {
-    engineMode = ModeTestbed;
-    gameState = GameStarted;
+    (void)argc;
+    (void)argv;
+    m_engineMode = ModeTestbed;
+    m_gameState = GameStarted;
+
+    m_platform->setAdvanceTimerInterval(1./60.);
+    m_platform->stopAdvanceTimer();
+
+    initBox2D();
+
+    startGame();
 }
 
 void GameEngine::initBox2D() {
-    if(engineMode == ModeTestbed) {
-
+    std::cout << __PRETTY_FUNCTION__ << " called" << std::endl;
+    if(engineMode() == ModeTestbed) {
+        b2Vec2 gravity(0,-9.81);
+        m_world = new b2World(gravity);
+        Ground *ground = new Ground(this);
+        entities.push_back(ground);
+        Ball *ball = new Ball(this);
+        entities.push_back(ball);
     } else {
         std::cerr << "Mode not implemented!" << std::endl;
     }
 }
 
+void GameEngine::redraw() {
+    platform()->clear();
+    for(int i = 0; i < entities.size(); i++) {
+        Entity* entity = entities.at(i);
+        platform()->drawSprite(entity->sprite(), entity->body()->GetPosition().x, entity->body()->GetPosition().y, 10, 10, 0);
+    }
+}
+
+void GameEngine::advance() {
+    int velocityIterations = 6;
+    int positionIterations = 2;
+    double timeStep = 1./60.;
+
+    m_world->Step(timeStep, velocityIterations, positionIterations);
+
+    redraw();
+}
+
+void GameEngine::startGame()
+{
+    m_gameState = GameRunning;
+    m_platform->startAdvanceTimer();
+}
