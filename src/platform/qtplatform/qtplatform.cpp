@@ -6,6 +6,7 @@
 #include <iostream>
 #include <QGraphicsRectItem>
 #include <QGraphicsItem>
+#include <math.h>
 
 QtPlatform::QtPlatform(int argc, char* argv[]) :
     Platform(argc, argv)
@@ -37,7 +38,6 @@ int QtPlatform::exec()
 
 void QtPlatform::advanceTimeout()
 {
-    std::cout << "Timed out!" << std::endl;
     gameEngine->advance();
 }
 
@@ -58,14 +58,16 @@ void QtPlatform::setAdvanceTimerInterval(double interval)
 
 void* QtPlatform::createSprite(std::string spriteFile)
 {
-    QGraphicsRectItem* rectItem = graphicsScene->addRect(0,0,10,10);
+    QGraphicsRectItem* rectItem = graphicsScene->addRect(0,0,100,100);
     return rectItem;
 }
 
 void QtPlatform::drawSprite(void *sprite, double x, double y, double width, double height, double rotation)
 {
     QGraphicsRectItem *spriteItem = (QGraphicsRectItem*)sprite;
-    spriteItem->setRect(x, y, width, height);
+    spriteItem->setPos(x,-y);
+//    spriteItem->setTransformOriginPoint(x, - y);
+//    spriteItem->setRotation(rotation * 180 / M_PI);
     spriteItem->setVisible(true);
 }
 

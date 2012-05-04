@@ -6,7 +6,7 @@ Ground::Ground(GameEngine *engine) :
     Entity(engine)
 {
     bodyDef = new b2BodyDef();
-    bodyDef->position.Set(0, -10);
+    bodyDef->position.Set(0, -40);
     m_body = world->CreateBody(bodyDef);
     polygonShape = new b2PolygonShape();
     shape = polygonShape;

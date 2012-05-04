@@ -50,7 +50,10 @@ void GameEngine::redraw() {
     platform()->clear();
     for(int i = 0; i < entities.size(); i++) {
         Entity* entity = entities.at(i);
-        platform()->drawSprite(entity->sprite(), entity->body()->GetPosition().x, entity->body()->GetPosition().y, 10, 10, 0);
+        // scaling should be redone
+        double x = entity->body()->GetPosition().x * 10;
+        double y = entity->body()->GetPosition().y * 10;
+        platform()->drawSprite(entity->sprite(), x, y, 100, 100, entity->body()->GetAngle());
     }
 }
 
