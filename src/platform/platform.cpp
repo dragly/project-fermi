@@ -1,5 +1,5 @@
 #include "platform.h"
 
-Platform::Platform()
+Platform::Platform(int argc, char *argv[])
 {
 }

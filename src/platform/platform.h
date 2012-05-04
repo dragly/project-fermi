@@ -4,7 +4,8 @@
 class Platform
 {
 public:
-    Platform();
+    Platform(int argc, char* argv[]);
+    virtual int exec() = 0;
 };
 
 #endif // PLATFORM_H
