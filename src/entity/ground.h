@@ -6,9 +6,9 @@
 class Ground : public Entity
 {
 public:
-    Ground(GameEngine *engine);
+    Ground(GameEngine *m_engine, const b2Vec2 &position, double width, double height);
 private:
-    b2PolygonShape* polygonShape;
+    b2PolygonShape* m_polygonShape;
 };
 
 #endif // GROUND_H

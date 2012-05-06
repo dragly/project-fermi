@@ -28,10 +28,9 @@ public slots:
     void advanceTimeout();
 
 private:
-    GameEngine *gameEngine;
 
     QGraphicsView *graphicsView;
-    QGraphicsScene *graphicsScene;
+    GraphicsScene *graphicsScene;
 
     QApplication *qtApp;
 

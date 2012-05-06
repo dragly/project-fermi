@@ -10,7 +10,7 @@
 class GameEngine
 {
 public:
-    GameEngine(Platform *m_platform, int argc, char *argv[]);
+    GameEngine(int argc, char *argv[]);
 
     enum GameState{
         GameStarted, /*! The game has just started */
@@ -33,6 +33,10 @@ public:
         return m_engineMode;
     }
 
+    void setPlatform(Platform* platform) {
+        m_platform = platform;
+    }
+
     void initBox2D();
     void advance();
     void startGame();
@@ -45,6 +49,7 @@ public:
         return m_platform;
     }
 
+    void onMouseReleased(int x, int y);
 private:
     EngineMode m_engineMode;
     GameState m_gameState;
@@ -54,6 +59,8 @@ private:
     Platform *m_platform;
 
     std::vector<Entity*> entities;
+
+    double m_scale;
 };
 
 #endif // GAMEENGINE_H

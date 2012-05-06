@@ -3,9 +3,9 @@
 #include "../platform/platform.h"
 #include "../gameengine/gameengine.h"
 
-Entity::Entity(GameEngine *engine_) :
-    engine(engine_),
-    world(engine_->world()),
-    platform(engine_->platform())
+Entity::Entity(GameEngine *engine) :
+    m_engine(engine),
+    m_world(engine->world()),
+    m_platform(engine->platform())
 {
 }

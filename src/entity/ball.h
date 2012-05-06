@@ -6,7 +6,7 @@
 class Ball : public Entity
 {
 public:
-    Ball(GameEngine *gameEngine);
+    Ball(GameEngine *gameEngine, const b2Vec2 &position, double radius);
 };
 
 #endif // BALL_H

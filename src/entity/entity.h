@@ -9,7 +9,7 @@ class Sprite;
 class Entity
 {
 public:
-    Entity(GameEngine *engine);
+    Entity(GameEngine *m_engine);
 
     Sprite* sprite() {
         return m_sprite;
@@ -27,13 +27,19 @@ public:
         return m_height;
     }
 
+    // TODO check that this is assigned a fixtureDef
+    b2FixtureDef *fixtureDef() {
+        return m_fixtureDef;
+    }
+
 protected:
-    GameEngine *engine;
-    b2World *world;
+    GameEngine *m_engine;
+    b2World *m_world;
     b2BodyDef *m_bodyDef;
     b2Body *m_body;
-    b2Shape *shape;
-    Platform *platform;
+    b2Shape *m_shape;
+    Platform *m_platform;
+    b2FixtureDef *m_fixtureDef;
 
     double m_width;
     double m_height;
