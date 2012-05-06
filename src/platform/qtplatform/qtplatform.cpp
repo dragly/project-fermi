@@ -20,6 +20,7 @@ QtPlatform::QtPlatform(int argc, char* argv[]) :
     graphicsScene->setSceneRect(0,0,800,480);
     graphicsView->setViewport(glwidget);
     graphicsView->setScene(graphicsScene);
+    graphicsView->scale(1,-1);
 
     connect(timer, SIGNAL(timeout()), SLOT(advanceTimeout()));
     gameEngine = new GameEngine(this, argc, argv);
@@ -65,10 +66,10 @@ void* QtPlatform::createSprite(std::string spriteFile)
 void QtPlatform::drawSprite(void *sprite, double x, double y, double width, double height, double rotation)
 {
     QGraphicsRectItem *spriteItem = (QGraphicsRectItem*)sprite;
-    spriteItem->setRect(0,0,width,-height);
-    spriteItem->setTransformOriginPoint(width/2,-height/2);
+    spriteItem->setRect(0,0,width,height);
+    spriteItem->setTransformOriginPoint(width/2, height/2);
     spriteItem->setRotation(rotation * 180 / M_PI);
-    spriteItem->setPos(x,graphicsScene->height()-y);
+    spriteItem->setPos(x,y);
     spriteItem->setVisible(true);
 }
 

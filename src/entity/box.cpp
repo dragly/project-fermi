@@ -13,10 +13,10 @@ Box::Box(GameEngine *engine) :
     m_body = world->CreateBody(bodyDef);
 
     polygonShape = new b2PolygonShape();
-    shape = polygonShape;
-    m_width = 2;
-    m_height = 2;
+    m_width = 4;
+    m_height = 4;
     polygonShape->SetAsBox(m_width, m_height);
+    shape = polygonShape;
 
     b2FixtureDef *fixtureDef = new b2FixtureDef();
     fixtureDef->shape = shape;
