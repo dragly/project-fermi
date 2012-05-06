@@ -40,6 +40,15 @@ void GameEngine::initBox2D() {
         m_world = new b2World(gravity);
         Ground *ground = new Ground(this);
         entities.push_back(ground);
+        Ground *ground2 = new Ground(this);
+        ground2->body()->SetTransform(b2Vec2(10,10),0);
+        entities.push_back(ground2);
+        Ground *ground3 = new Ground(this);
+        ground3->body()->SetTransform(b2Vec2(20,10),0);
+        entities.push_back(ground3);
+        Ground *ground4 = new Ground(this);
+        ground4->body()->SetTransform(b2Vec2(30,10),0);
+        entities.push_back(ground4);
         Box *box = new Box(this);
         entities.push_back(box);
         Ball *ball = new Ball(this);

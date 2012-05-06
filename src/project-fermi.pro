@@ -11,7 +11,9 @@ HEADERS += \
     entity/entity.h \
     entity/ball.h \
     entity/ground.h \
-    entity/box.h
+    entity/box.h \
+    platform/sprite.h \
+    platform/qtplatform/qtsprite.h
 
 SOURCES += \
     platform/platform.cpp \
@@ -22,9 +24,14 @@ SOURCES += \
     entity/entity.cpp \
     entity/ball.cpp \
     entity/ground.cpp \
-    entity/box.cpp
+    entity/box.cpp \
+    platform/sprite.cpp \
+    platform/qtplatform/qtsprite.cpp
 
 # Box2D should be placed in a libs/ folder next to src/
 INCLUDEPATH += ../libs/Box2D_v2.2.1
 INCLUDEPATH += ../libs/Box2D_v2.2.1/Box2D
 LIBS += -L../libs/Box2D_v2.2.1/Build/gmake/bin/Debug -lBox2D
+
+RESOURCES += \
+    resources.qrc

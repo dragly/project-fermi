@@ -1,6 +1,7 @@
 #include "qtplatform.h"
 
 #include "gameengine/gameengine.h"
+#include "qtsprite.h"
 
 #include <QApplication>
 #include <iostream>
@@ -57,19 +58,23 @@ void QtPlatform::setAdvanceTimerInterval(double interval)
     timer->setInterval(interval * 1000);
 }
 
-void* QtPlatform::createSprite(std::string spriteFile)
+Sprite* QtPlatform::createSprite(std::string spriteFile)
 {
-    QGraphicsRectItem* rectItem = graphicsScene->addRect(0,0,100,100);
-    return rectItem;
+    QPixmap pixmap(QString(":/images/") + QString::fromStdString(spriteFile));
+    QGraphicsPixmapItem* rectItem = graphicsScene->addPixmap(pixmap);
+    QtSprite *sprite = new QtSprite(rectItem);
+    return sprite;
 }
 
-void QtPlatform::drawSprite(void *sprite, double x, double y, double width, double height, double rotation)
+void QtPlatform::drawSprite(Sprite *sprite, double x, double y, double width, double height, double rotation)
 {
-    QGraphicsRectItem *spriteItem = (QGraphicsRectItem*)sprite;
-    spriteItem->setRect(0,0,width,height);
+    QtSprite* qtSprite = (QtSprite*)sprite;
+    QGraphicsPixmapItem *spriteItem = (QGraphicsPixmapItem*)qtSprite->graphicsItem();
+    QPixmap tmpPixmap = spriteItem->pixmap();
+    spriteItem->setPixmap(tmpPixmap.scaledToHeight(height, Qt::SmoothTransformation));
     spriteItem->setTransformOriginPoint(width/2, height/2);
     spriteItem->setRotation(rotation * 180 / M_PI);
-    spriteItem->setPos(x,y);
+    spriteItem->setPos(-width/2 + x, -height/2 + y);
     spriteItem->setVisible(true);
 }
 

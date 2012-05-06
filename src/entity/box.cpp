@@ -5,17 +5,17 @@
 Box::Box(GameEngine *engine) :
     Entity(engine)
 {
-    bodyDef = new b2BodyDef();
-    bodyDef->type = b2_dynamicBody;
-    bodyDef->position.Set(0, 20);
-    bodyDef->linearVelocity.y = 5;
-    bodyDef->linearVelocity.x = 10;
-    m_body = world->CreateBody(bodyDef);
+    m_bodyDef = new b2BodyDef();
+    m_bodyDef->type = b2_dynamicBody;
+    m_bodyDef->position.Set(0, 20);
+    m_bodyDef->linearVelocity.y = 5;
+    m_bodyDef->linearVelocity.x = 4;
+    m_body = world->CreateBody(m_bodyDef);
 
     polygonShape = new b2PolygonShape();
     m_width = 4;
     m_height = 4;
-    polygonShape->SetAsBox(m_width, m_height);
+    polygonShape->SetAsBox(m_width / 2, m_height / 2);
     shape = polygonShape;
 
     b2FixtureDef *fixtureDef = new b2FixtureDef();
@@ -26,5 +26,5 @@ Box::Box(GameEngine *engine) :
 
     m_body->CreateFixture(fixtureDef);
     m_body->SetAngularVelocity(0.1);
-    m_sprite = platform->createSprite("..."); // TODO create real sprites
+    m_sprite = platform->createSprite("box.png"); // TODO create real sprites
 }

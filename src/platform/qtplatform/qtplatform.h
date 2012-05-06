@@ -20,8 +20,8 @@ public:
     void startAdvanceTimer();
     void stopAdvanceTimer();
     void setAdvanceTimerInterval(double interval);
-    void *createSprite(std::string spriteFile);
-    void drawSprite(void *sprite, double x, double y, double width, double height, double rotation);
+    Sprite *createSprite(std::string spriteFile);
+    void drawSprite(Sprite *sprite, double x, double y, double width, double height, double rotation);
     void clear();
 
 public slots:
