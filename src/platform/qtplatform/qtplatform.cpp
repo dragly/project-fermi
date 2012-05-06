@@ -65,9 +65,10 @@ void* QtPlatform::createSprite(std::string spriteFile)
 void QtPlatform::drawSprite(void *sprite, double x, double y, double width, double height, double rotation)
 {
     QGraphicsRectItem *spriteItem = (QGraphicsRectItem*)sprite;
-    spriteItem->setPos(x,-y);
-//    spriteItem->setTransformOriginPoint(x, - y);
-//    spriteItem->setRotation(rotation * 180 / M_PI);
+    spriteItem->setRect(0,0,width,-height);
+    spriteItem->setTransformOriginPoint(width/2,-height/2);
+    spriteItem->setRotation(rotation * 180 / M_PI);
+    spriteItem->setPos(x,graphicsScene->height()-y);
     spriteItem->setVisible(true);
 }
 

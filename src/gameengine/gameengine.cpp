@@ -5,6 +5,7 @@
 #include "platform/platform.h"
 #include "entity/ball.h"
 #include "entity/ground.h"
+#include "entity/box.h"
 
 /*!
   The GameEngine class contains all the logic to run the game or testbed.
@@ -39,6 +40,8 @@ void GameEngine::initBox2D() {
         m_world = new b2World(gravity);
         Ground *ground = new Ground(this);
         entities.push_back(ground);
+        Box *box = new Box(this);
+        entities.push_back(box);
         Ball *ball = new Ball(this);
         entities.push_back(ball);
     } else {
@@ -50,10 +53,13 @@ void GameEngine::redraw() {
     platform()->clear();
     for(int i = 0; i < entities.size(); i++) {
         Entity* entity = entities.at(i);
+        double scale = 10;
         // scaling should be redone
-        double x = entity->body()->GetPosition().x * 10;
-        double y = entity->body()->GetPosition().y * 10;
-        platform()->drawSprite(entity->sprite(), x, y, 100, 100, entity->body()->GetAngle());
+        double x = entity->body()->GetPosition().x * scale;
+        double y = entity->body()->GetPosition().y * scale;
+        double width = entity->width() * scale;
+        double height = entity->height() * scale;
+        platform()->drawSprite(entity->sprite(), x, y, width, height, entity->body()->GetAngle());
     }
 }
 

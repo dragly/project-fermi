@@ -10,7 +10,8 @@ HEADERS += \
     platform/qtplatform/graphicsscene.h \
     entity/entity.h \
     entity/ball.h \
-    entity/ground.h
+    entity/ground.h \
+    entity/box.h
 
 SOURCES += \
     platform/platform.cpp \
@@ -20,7 +21,8 @@ SOURCES += \
     platform/qtplatform/graphicsscene.cpp \
     entity/entity.cpp \
     entity/ball.cpp \
-    entity/ground.cpp
+    entity/ground.cpp \
+    entity/box.cpp
 
 # Box2D should be placed in a libs/ folder next to src/
 INCLUDEPATH += ../libs/Box2D_v2.2.1

@@ -19,6 +19,14 @@ public:
         return m_body;
     }
 
+    double width() {
+        return m_width;
+    }
+
+    double height() {
+        return m_height;
+    }
+
 protected:
     GameEngine *engine;
     b2World *world;
@@ -26,6 +34,9 @@ protected:
     b2Body *m_body;
     b2Shape *shape;
     Platform *platform;
+
+    double m_width;
+    double m_height;
 
     void *m_sprite;
 };
