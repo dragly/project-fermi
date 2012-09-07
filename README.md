@@ -10,26 +10,26 @@ Building
 1. Download the Box2D library, version 2.2.1 - http://code.google.com/p/box2d/downloads/list
 1. Make sure you have some OpenGL development library installed, i.e. on Ubuntu run
 
-    sudo apt-get install libgl1-mesa-dev
+        sudo apt-get install libgl1-mesa-dev
 
 1. Create a project folder for this project.
 1. Clone this project into < your folder > so you end up with
 
-      < your folder >/project-fermi
+        < your folder >/project-fermi
 
    by using the command
 
-      git clone git@github.com:dragly/project-fermi.git
+        git clone git@github.com:dragly/project-fermi.git
 
 1. Unpack the downloaded Box2D library zip into a subfolder named libs, so that it has the path
 
-      < your folder >/project-fermi/libs/Box2D_v2.2.1/
+        < your folder >/project-fermi/libs/Box2D_v2.2.1/
 
 1. Build Box2D in this directory by downloading premake4.4 and run
 
-       ./premake4 gmake
-       cd Build/gmake
-       make Box2D
+        ./premake4 gmake
+        cd Build/gmake
+        make Box2D
 
 1. Open the < your folder >/project-fermi/src/project-fermi.pro file in Qt Creator and build the project
 
@@ -37,8 +37,8 @@ Building
 
 1. Move to the unpacked folder and run the following in terminal
 
-    qmake
-    make
+        qmake
+        make
 
 License
 ============
