@@ -6,9 +6,18 @@ the group if you have some good ideas about how the code should be structured.
 
 ## Class, function and variable names
 
-Classes: FirstLetterInEachWordUpperCase
-Functions: secondWordAndAllOthersUpperCase()
-Variables: sameAsFunctions;
+Classes:
+    FirstLetterInEachWordUpperCase
+Functions:
+    secondWordAndAllOthersUpperCase()
+Variables:
+    sameAsFunctions;
+
+## Commenting
+
+Do not comment on every line. Instead try to write easily readable code. However,
+do comment all your functions and classes, and variables of great interest or which are
+hard to understand.
 
 ## Writing output to terminal ##
 
