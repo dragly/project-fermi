@@ -3,22 +3,42 @@ Project Fermi
 
 Project Fermi is the code name for the great up-and-coming comp.phys. game.
 
-This is a work in progress
-
 Building
 ============
 
-On platforms with Qt and Box2D libraries installed, building should be as easy
-as doing
+    # Download and install the Qt SDK - https://qt-project.org/downloads
+    # Download the Box2D library, version 2.2.1 - http://code.google.com/p/box2d/downloads/list
+    # Make sure you have some OpenGL development library installed, i.e. on Ubuntu run
 
-  qmake
-  make
+        sudo apt-get install libgl1-mesa-dev
 
-in the src/ directory. Running the current version is done by running
+    # Create a project folder for this project.
+    # Clone this project into < your folder > so you end up with
 
-  ./project-fermi
+          < your folder >/project-fermi
 
-in the same directory.
+       by using the command
+
+          git clone git@github.com:dragly/project-fermi.git
+
+    # Unpack the downloaded Box2D library zip into a subfolder named libs, so that it has the path
+
+          < your folder >/project-fermi/libs/Box2D_v2.2.1/
+
+    # Build Box2D in this directory by downloading premake4.4 and run
+
+           ./premake4 gmake
+           cd Build/gmake
+           make Box2D
+
+    # Open the < your folder >/project-fermi/src/project-fermi.pro file in Qt Creator and build the project
+
+       or
+
+    # Move to the unpacked folder and run the following in terminal
+
+        qmake
+        make
 
 License
 ============
