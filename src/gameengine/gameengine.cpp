@@ -3,9 +3,9 @@
 #include <Box2D.h>
 #include <iostream>
 #include "platform/platform.h"
-#include "entity/ball.h"
+#include "entity/svennisawesomeball.h"
 #include "entity/ground.h"
-#include "entity/box.h"
+#include "entity/svenniscoolbluebox.h"
 
 /*!
   The GameEngine class contains all the logic to run the game or testbed.
@@ -42,10 +42,11 @@ void GameEngine::initBox2D() {
         entities.push_back(ground3);
         Ground *ground4 = new Ground(this, b2Vec2(30,10), 10, 10);
         entities.push_back(ground4);
-        Box *box = new Box(this, b2Vec2(10,20), 5, 5);
+        SvennisCoolBlueBox *box = new SvennisCoolBlueBox(this, b2Vec2(10,20), 5, 5);
         box->body()->SetLinearVelocity(b2Vec2(5,2));
+        box->body()->SetAngularVelocity(0.1f);
         entities.push_back(box);
-        Ball *ball = new Ball(this, b2Vec2(15,30),2);
+        SvennisAwesomeBall *ball = new SvennisAwesomeBall(this, b2Vec2(15,30),2);
         ball->body()->SetLinearVelocity(b2Vec2(5,10));
         entities.push_back(ball);
     } else {
@@ -57,8 +58,8 @@ void GameEngine::initBox2D() {
 
 void GameEngine::redraw() {
     platform()->clear();
-    for(int i = 0; i < entities.size(); i++) {
-        Entity* entity = entities.at(i);
+
+    for(Entity* entity : entities) {
         m_scale = 10;
         // scaling should be redone
         double x = entity->body()->GetPosition().x * m_scale;
@@ -90,7 +91,7 @@ void GameEngine::onMouseReleased(int x, int y) {
     b2Vec2 position;
     position.x = x / m_scale;
     position.y = y / m_scale;
-    Ball *ball = new Ball(this, position, 2);
+    SvennisAwesomeBall *ball = new SvennisAwesomeBall(this, position, 2);
     ball->body()->SetLinearVelocity(b2Vec2(1,2));
     entities.push_back(ball);
 }

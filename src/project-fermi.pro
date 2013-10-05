@@ -1,5 +1,6 @@
 QT += core gui opengl
 
+QMAKE_CXXFLAGS += -std=c++0x
 
 DEFINES += PLATFORM_IS_QT
 
@@ -9,11 +10,13 @@ HEADERS += \
     platform/qtplatform/qtplatform.h \
     platform/qtplatform/graphicsscene.h \
     entity/entity.h \
-    entity/ball.h \
+    entity/svennisawesomeball.h \
     entity/ground.h \
-    entity/box.h \
+    entity/boxentity.h \
     platform/sprite.h \
-    platform/qtplatform/qtsprite.h
+    platform/qtplatform/qtsprite.h \
+    entity/circleentity.h \
+    entity/svenniscoolbluebox.h
 
 SOURCES += \
     platform/platform.cpp \
@@ -22,11 +25,13 @@ SOURCES += \
     platform/qtplatform/qtplatform.cpp \
     platform/qtplatform/graphicsscene.cpp \
     entity/entity.cpp \
-    entity/ball.cpp \
+    entity/svennisawesomeball.cpp \
     entity/ground.cpp \
-    entity/box.cpp \
+    entity/boxentity.cpp \
     platform/sprite.cpp \
-    platform/qtplatform/qtsprite.cpp
+    platform/qtplatform/qtsprite.cpp \
+    entity/circleentity.cpp \
+    entity/svenniscoolbluebox.cpp
 
 # Box2D should be placed in a libs/ folder next to src/
 # It is suffixed with -harmattan if it is an ARM build for Nokia N9

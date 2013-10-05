@@ -1,15 +1,20 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#define ENTITY_NO_SIZE -1
+#define ENTITY_MISSING_SPRITE "somePicture.png"
+#define ENTITY_STATIC_FIXTURE 0, 0
+
 class GameEngine;
 class Platform;
 class Sprite;
+
 #include <Box2D.h>
+#include <string>
 
 class Entity
 {
 public:
-    Entity(GameEngine *m_engine);
 
     Sprite* sprite() {
         return m_sprite;
@@ -27,24 +32,36 @@ public:
         return m_height;
     }
 
-    // TODO check that this is assigned a fixtureDef
-    b2FixtureDef *fixtureDef() {
-        return m_fixtureDef;
-    }
-
 protected:
+
+    Entity(GameEngine *m_engine,
+           const b2Vec2 &position,
+           std::string spriteName = ENTITY_MISSING_SPRITE,
+           b2Shape * shape = NULL,
+           double width = ENTITY_NO_SIZE,
+           double height = ENTITY_NO_SIZE,
+           bool dynamic = true);
+
     GameEngine *m_engine;
+
     b2World *m_world;
+
+    Platform *m_platform;
+
     b2BodyDef *m_bodyDef;
     b2Body *m_body;
+
     b2Shape *m_shape;
-    Platform *m_platform;
-    b2FixtureDef *m_fixtureDef;
+
+    Sprite *m_sprite;
 
     double m_width;
     double m_height;
 
-    Sprite *m_sprite;
+    void createFixtureFromProps(float32 density,
+                                float32 restitution,
+                                float32 friction = 0.2f);
+
 };
 
 #endif // ENTITY_H
