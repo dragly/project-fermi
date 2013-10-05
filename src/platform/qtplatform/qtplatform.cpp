@@ -1,6 +1,5 @@
 #include "qtplatform.h"
 
-#include "gameengine/gameengine.h"
 #include "qtsprite.h"
 
 #include <QApplication>
@@ -10,23 +9,24 @@
 #include <math.h>
 
 QtPlatform::QtPlatform(int argc, char* argv[]) :
-    Platform(argc, argv)
+    Platform(argc, argv),
+    timer(new QTimer),
+    qtApp(new QApplication(argc, argv)),
+    graphicsView(new QGraphicsView)
 {
 
-    timer = new QTimer();
-    qtApp = new QApplication(argc, argv);
-    graphicsView = new QGraphicsView();
     QGLWidget *glwidget = new QGLWidget(graphicsView);
     graphicsView->setViewport(glwidget);
     graphicsView->scale(1,-1);
 
+    //This is the magic which makes a game possible I guess?
     connect(timer, SIGNAL(timeout()), SLOT(advanceTimeout()));
-    m_gameEngine = new GameEngine(argc, argv);
+
     graphicsScene = new GraphicsScene(this);
     graphicsScene->setSceneRect(0,0,800,480);
     graphicsView->setScene(graphicsScene);
+
     m_gameEngine->setPlatform(this);
-    m_gameEngine->initBox2D();
 }
 
 /*!
@@ -47,6 +47,7 @@ void QtPlatform::advanceTimeout()
 
 void QtPlatform::startAdvanceTimer()
 {
+    std::cout << __PRETTY_FUNCTION__ << " called" << std::endl;
     timer->start();
 }
 
@@ -65,14 +66,16 @@ Sprite* QtPlatform::createSprite(std::string spriteFile)
     QPixmap pixmap(QString(":/images/") + QString::fromStdString(spriteFile));
     QGraphicsPixmapItem* pixItem = graphicsScene->addPixmap(pixmap);
     pixItem->setVisible(false);
+
     QtSprite *sprite = new QtSprite(pixItem);
+
     return sprite;
 }
 
 void QtPlatform::drawSprite(Sprite *sprite, double x, double y, double width, double height, double rotation)
 {
     QtSprite* qtSprite = (QtSprite*)sprite;
-    QGraphicsPixmapItem *spriteItem = (QGraphicsPixmapItem*)qtSprite->graphicsItem();
+    QGraphicsPixmapItem *spriteItem = (QGraphicsPixmapItem*)qtSprite->getGraphicsItem();
     QPixmap tmpPixmap = spriteItem->pixmap();
     spriteItem->setPixmap(tmpPixmap.scaledToHeight(height, Qt::SmoothTransformation));
     spriteItem->setTransformOriginPoint(width/2, height/2);
@@ -83,5 +86,10 @@ void QtPlatform::drawSprite(Sprite *sprite, double x, double y, double width, do
 
 void QtPlatform::clear()
 {
+}
+
+void QtPlatform::close()
+{
+    graphicsView->close();
 }
 

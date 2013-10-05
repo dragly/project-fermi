@@ -25,14 +25,19 @@ GameEngine::GameEngine(int argc, char *argv[])
     m_gameState = GameStarted;
 }
 
-void GameEngine::initBox2D() {
+void GameEngine::initBox2D(int velocityIterations, int positionIterations, double timeStep) {
     std::cout << __PRETTY_FUNCTION__ << " called" << std::endl;
 
-    m_platform->setAdvanceTimerInterval(1./60.);
+    m_platform->setAdvanceTimerInterval(timeStep);
     m_platform->stopAdvanceTimer();
+
+    this->velocityIterations = velocityIterations;
+    this->positionIterations = positionIterations;
+    this->timeStep = timeStep;
 
     b2Vec2 gravity(0,-9.81);
     m_world = new b2World(gravity);
+
     if(engineMode() == ModeTestbed) {
         Ground *ground = new Ground(this, b2Vec2(0,10), 10, 10);
         entities.push_back(ground);
@@ -43,6 +48,7 @@ void GameEngine::initBox2D() {
         Ground *ground4 = new Ground(this, b2Vec2(30,10), 10, 10);
         entities.push_back(ground4);
         SvennisCoolBlueBox *box = new SvennisCoolBlueBox(this, b2Vec2(10,20), 5, 5);
+        box->setIdentifyer(AwesomeBlueBox);
         box->body()->SetLinearVelocity(b2Vec2(5,2));
         box->body()->SetAngularVelocity(0.1f);
         entities.push_back(box);
@@ -52,14 +58,15 @@ void GameEngine::initBox2D() {
     } else {
         std::cerr << "Mode not implemented!" << std::endl;
     }
-
-    startGame();
 }
 
 void GameEngine::redraw() {
+
     platform()->clear();
 
-    for(Entity* entity : entities) {
+    for(unsigned int i = 0; i < entities.size(); ++i) {
+        Entity* entity = entities.at(i);
+
         m_scale = 10;
         // scaling should be redone
         double x = entity->body()->GetPosition().x * m_scale;
@@ -70,13 +77,31 @@ void GameEngine::redraw() {
     }
 }
 
-void GameEngine::advance() {
-    int velocityIterations = 6;
-    int positionIterations = 2;
-    double timeStep = 1./60.;
+std::vector<Entity*> GameEngine::getEntitiesFromID(int ID)
+{
 
+    std::vector<Entity*> matchedEntities;
+
+    for (unsigned int i = 0; i < entities.size(); ++i) {
+        Entity* entity_i = entities.at(i);
+        const int* ID_i = entity_i->getIdentifyer();
+
+        if (ID_i == NULL){
+            continue;
+        }
+
+        if (ID == *(ID_i)) {
+            matchedEntities.push_back(entity_i);
+        }
+    }
+
+    return matchedEntities;
+
+}
+
+void GameEngine::advance()
+{
     m_world->Step(timeStep, velocityIterations, positionIterations);
-
     redraw();
 }
 
@@ -86,12 +111,51 @@ void GameEngine::startGame()
     m_platform->startAdvanceTimer();
 }
 
-void GameEngine::onMouseReleased(int x, int y) {
+void GameEngine::exitGame()
+{
+    m_gameState = GameOver;
+    m_platform->stopAdvanceTimer();
+    m_platform->close();
+}
+
+void GameEngine::onMouseReleased(int x, int y)
+{
     std::cout << b2Vec2(x,y).x << " " << b2Vec2(x,y).y << std::endl;
     b2Vec2 position;
     position.x = x / m_scale;
     position.y = y / m_scale;
-    SvennisAwesomeBall *ball = new SvennisAwesomeBall(this, position, 2);
+
+    double radius = 1 + (Sprite::getNumberOfSprites()%20)/5;
+
+    SvennisAwesomeBall *ball = new SvennisAwesomeBall(this, position, radius);
     ball->body()->SetLinearVelocity(b2Vec2(1,2));
+    ball->body()->SetAngularVelocity(radius*2);
     entities.push_back(ball);
+}
+
+void GameEngine::moveBox(int direction)
+{
+    b2Body * blueBox = (*getEntitiesFromID(AwesomeBlueBox).begin())->body();
+
+    float scale = 0.25f;
+
+    const b2Vec2 & oldPosition = blueBox->GetPosition();
+
+    float newX = oldPosition.x + direction*scale;
+
+    b2Vec2 newPosition(newX, oldPosition.y);
+
+    b2Vec2 force(direction*1000.0f, 0);
+
+    blueBox->SetTransform(newPosition, blueBox->GetAngle());
+    blueBox->ApplyForce(force, blueBox->GetWorldCenter());
+}
+
+void GameEngine::launchBox(){
+
+    b2Body * blueBox = (*getEntitiesFromID(AwesomeBlueBox).begin())->body();
+
+    b2Vec2 rocket(0, 10000.0f);
+    blueBox->ApplyForce(rocket, blueBox->GetWorldCenter());
+
 }

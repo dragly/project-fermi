@@ -3,6 +3,8 @@
 #include "../platform/platform.h"
 #include "../gameengine/gameengine.h"
 
+#include <iostream>
+
 Entity::Entity(GameEngine *engine,
                const b2Vec2 &position,
                std::string spriteName,
@@ -16,7 +18,8 @@ Entity::Entity(GameEngine *engine,
     m_bodyDef(new b2BodyDef),
     m_shape(shape),
     m_width(width),
-    m_height(heigth)
+    m_height(heigth),
+    identifyer(NULL)
 {
 
     //Defaults to static (see Box2D/dynamics/b2Body.h)
@@ -29,6 +32,9 @@ Entity::Entity(GameEngine *engine,
     m_body = m_world->CreateBody(m_bodyDef);
 
     m_sprite = m_platform->createSprite(spriteName);
+    m_sprite->setName(spriteName);
+
+    std::cout << "Entity created: " << m_sprite->getDescription() << std::endl;
 
 }
 

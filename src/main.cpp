@@ -7,8 +7,13 @@
 */
 int main(int argc, char* argv[]) {
     Platform *platform;
+
 #ifdef PLATFORM_IS_QT
     platform = new QtPlatform(argc, argv);
 #endif
+
+    platform->gameEngine()->initBox2D(6, 2, 1./60);
+    platform->gameEngine()->startGame();
+
     return platform->exec();
 }

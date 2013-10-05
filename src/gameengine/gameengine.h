@@ -25,6 +25,10 @@ public:
         ModeTestbed /*! The engine is running in testbed mode */
     };
 
+    enum SpecialEntityIdentifyer {
+        AwesomeBlueBox /*! Nice to have identifyers for quick access to a group of entities (e.g. to switch off lights etc.) */
+    };
+
     GameState gameState() {
         return m_gameState;
     }
@@ -37,10 +41,14 @@ public:
         m_platform = platform;
     }
 
-    void initBox2D();
+    void initBox2D(int velocityIterations, int positionIterations, double timestep);
     void advance();
     void startGame();
+    void exitGame();
     void redraw();
+
+    std::vector<Entity *> getEntitiesFromID(int ID);
+
     b2World *world() {
         return m_world;
     }
@@ -50,6 +58,8 @@ public:
     }
 
     void onMouseReleased(int x, int y);
+    void moveBox(int direction);
+    void launchBox();
 private:
     EngineMode m_engineMode;
     GameState m_gameState;
@@ -61,6 +71,10 @@ private:
     std::vector<Entity*> entities;
 
     double m_scale;
+
+    int velocityIterations;
+    int positionIterations;
+    double timeStep;
 };
 
 #endif // GAMEENGINE_H

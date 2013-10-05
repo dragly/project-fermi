@@ -9,7 +9,7 @@ protected:
     circleEntity(GameEngine *engine,
                  const b2Vec2 &position,
                  double radius = ENTITY_NO_SIZE,
-                 std::string spriteName = ENTITY_MISSING_SPRITE,
+                 std::string spriteName = ENTITY_DEFAULT_SPRITE,
                  bool dynamic = true);
 };
 

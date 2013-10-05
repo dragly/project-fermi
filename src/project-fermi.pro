@@ -1,6 +1,6 @@
 QT += core gui opengl
 
-QMAKE_CXXFLAGS += -std=c++0x
+#QMAKE_CXXFLAGS += -std=c++0x
 
 DEFINES += PLATFORM_IS_QT
 

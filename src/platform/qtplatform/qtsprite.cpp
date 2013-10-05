@@ -8,8 +8,3 @@ QtSprite::QtSprite(QGraphicsItem *graphicsItem) :
 {
 
 }
-
-QGraphicsItem *QtSprite::graphicsItem()
-{
-    return m_graphicsItem;
-}

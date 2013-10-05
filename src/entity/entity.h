@@ -2,7 +2,7 @@
 #define ENTITY_H
 
 #define ENTITY_NO_SIZE -1
-#define ENTITY_MISSING_SPRITE "somePicture.png"
+#define ENTITY_DEFAULT_SPRITE "defaultpicture.png"
 #define ENTITY_STATIC_FIXTURE 0, 0
 
 class GameEngine;
@@ -32,11 +32,25 @@ public:
         return m_height;
     }
 
+    const int * getIdentifyer() {
+        return identifyer;
+    }
+
+    void setIdentifyer(int identifyer){
+
+        if (this->identifyer == NULL) {
+            this->identifyer = new int(identifyer);
+        } else {
+        *(this->identifyer) = identifyer;
+        }
+
+    }
+
 protected:
 
     Entity(GameEngine *m_engine,
            const b2Vec2 &position,
-           std::string spriteName = ENTITY_MISSING_SPRITE,
+           std::string spriteName = ENTITY_DEFAULT_SPRITE,
            b2Shape * shape = NULL,
            double width = ENTITY_NO_SIZE,
            double height = ENTITY_NO_SIZE,
@@ -57,6 +71,8 @@ protected:
 
     double m_width;
     double m_height;
+
+    int* identifyer;
 
     void createFixtureFromProps(float32 density,
                                 float32 restitution,

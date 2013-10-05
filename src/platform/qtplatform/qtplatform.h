@@ -23,18 +23,21 @@ public:
     Sprite *createSprite(std::string spriteFile);
     void drawSprite(Sprite *sprite, double x, double y, double width, double height, double rotation);
     void clear();
+    void close();
 
 public slots:
     void advanceTimeout();
 
 private:
 
-    QGraphicsView *graphicsView;
-    GraphicsScene *graphicsScene;
+    QTimer *timer;
 
     QApplication *qtApp;
 
-    QTimer *timer;
+    QGraphicsView *graphicsView;
+    GraphicsScene *graphicsScene;
+
+
 };
 
 #endif // QTPLATFORM_H

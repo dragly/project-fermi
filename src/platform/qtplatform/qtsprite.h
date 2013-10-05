@@ -11,9 +11,11 @@ class QtSprite : public Sprite
 public:
     QtSprite(QGraphicsItem *graphicsItem);
 
-    QGraphicsItem *graphicsItem();
+    QGraphicsItem *getGraphicsItem() {
+        return m_graphicsItem;
+    }
+
 private:
-    std::string m_filename;
     QGraphicsItem* m_graphicsItem;
 };
 

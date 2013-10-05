@@ -1,7 +1,9 @@
 #include "platform.h"
 
-Platform::Platform(int argc, char *argv[])
+#include "../gameengine/gameengine.h"
+
+Platform::Platform(int argc, char *argv[]) :
+    m_gameEngine(new GameEngine(argc, argv))
 {
-    (void) argc;
-    (void) argv;
+
 }
