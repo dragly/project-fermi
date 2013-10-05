@@ -10,7 +10,7 @@
 class GameEngine
 {
 public:
-    GameEngine(int argc, char *argv[]);
+    GameEngine(int argc, char *argv[], Platform *platform);
 
     enum GameState{
         GameStarted, /*! The game has just started */
@@ -39,9 +39,10 @@ public:
 
     void setPlatform(Platform* platform) {
         m_platform = platform;
+        platform->setGameEngine(this);
     }
 
-    void initBox2D(int velocityIterations, int positionIterations, double timestep);
+    void initBox2D(int velocityIterations, int positionIterations, double timestep, double pixPrMeter);
     void advance();
     void startGame();
     void exitGame();
@@ -57,6 +58,14 @@ public:
         return m_platform;
     }
 
+    int pixPrMeter() {
+        return m_pixPrMeter;
+    }
+
+    void setPixPrMeter(int ppm) {
+        m_pixPrMeter = ppm;
+    }
+
     void onMouseReleased(int x, int y);
     void moveBox(int direction);
     void launchBox();
@@ -70,11 +79,15 @@ private:
 
     std::vector<Entity*> entities;
 
-    double m_scale;
+    double m_pixPrMeter;
 
     int velocityIterations;
     int positionIterations;
     double timeStep;
+
+
+
+
 };
 
 #endif // GAMEENGINE_H

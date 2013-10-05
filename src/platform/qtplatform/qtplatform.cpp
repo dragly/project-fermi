@@ -25,8 +25,6 @@ QtPlatform::QtPlatform(int argc, char* argv[]) :
     graphicsScene = new GraphicsScene(this);
     graphicsScene->setSceneRect(0,0,800,480);
     graphicsView->setScene(graphicsScene);
-
-    m_gameEngine->setPlatform(this);
 }
 
 /*!
@@ -91,5 +89,13 @@ void QtPlatform::clear()
 void QtPlatform::close()
 {
     graphicsView->close();
+}
+
+//Since the window is flipped upside down, all entities will appear so.
+//To counter this we let the physics engine rotate the objects at creation.
+void QtPlatform::prepareEntity(Entity *entity)
+{
+    b2Body * body = entity->body();
+    body->SetTransform(body->GetPosition(), body->GetAngle() + M_PI);
 }
 

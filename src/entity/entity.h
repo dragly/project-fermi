@@ -32,19 +32,28 @@ public:
         return m_height;
     }
 
-    const int * getIdentifyer() {
-        return identifyer;
+    const int * identifyer() {
+        return m_identifyer;
     }
 
     void setIdentifyer(int identifyer){
 
-        if (this->identifyer == NULL) {
-            this->identifyer = new int(identifyer);
+        if (m_identifyer == NULL) {
+            m_identifyer = new int(identifyer);
         } else {
-        *(this->identifyer) = identifyer;
+        *(m_identifyer) = identifyer;
         }
 
     }
+
+    static unsigned int getNumberOfSprites(){
+        return staticID;
+    }
+
+    std::string description(){
+        return m_description;
+    }
+
 
 protected:
 
@@ -72,7 +81,11 @@ protected:
     double m_width;
     double m_height;
 
-    int* identifyer;
+    static unsigned int staticID;
+
+    int* m_identifyer;
+
+    std::string m_description;
 
     void createFixtureFromProps(float32 density,
                                 float32 restitution,

@@ -4,6 +4,7 @@
 #include "../gameengine/gameengine.h"
 
 #include <iostream>
+#include <sstream>
 
 Entity::Entity(GameEngine *engine,
                const b2Vec2 &position,
@@ -19,7 +20,7 @@ Entity::Entity(GameEngine *engine,
     m_shape(shape),
     m_width(width),
     m_height(heigth),
-    identifyer(NULL)
+    m_identifyer(NULL)
 {
 
     //Defaults to static (see Box2D/dynamics/b2Body.h)
@@ -32,9 +33,15 @@ Entity::Entity(GameEngine *engine,
     m_body = m_world->CreateBody(m_bodyDef);
 
     m_sprite = m_platform->createSprite(spriteName);
-    m_sprite->setName(spriteName);
 
-    std::cout << "Entity created: " << m_sprite->getDescription() << std::endl;
+    std::stringstream s;
+
+    s << spriteName << "_" << staticID++;
+    m_description =  s.str();
+
+    std::cout << "Entity created: " << description() << std::endl;
+
+    m_platform->prepareEntity(this);
 
 }
 
@@ -50,3 +57,6 @@ void Entity::createFixtureFromProps(float32 density, float32 restitution, float3
 
     m_body->CreateFixture(fixtureDef);
 }
+
+
+unsigned int Entity::staticID = 0;

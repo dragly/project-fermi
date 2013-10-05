@@ -24,6 +24,7 @@ public:
     void drawSprite(Sprite *sprite, double x, double y, double width, double height, double rotation);
     void clear();
     void close();
+    void prepareEntity(Entity *entity);
 
 public slots:
     void advanceTimeout();

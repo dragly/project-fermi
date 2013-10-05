@@ -2,10 +2,12 @@
 
 #include <Box2D.h>
 #include <iostream>
+
 #include "platform/platform.h"
-#include "entity/svennisawesomeball.h"
+
 #include "entity/ground.h"
 #include "entity/svenniscoolbluebox.h"
+#include "entity/svennisawesomeball.h"
 
 /*!
   The GameEngine class contains all the logic to run the game or testbed.
@@ -17,16 +19,21 @@
     in time. Putting things in modules from the beginning should make it easier to
     maintain (and quicker to compile).
 */
-GameEngine::GameEngine(int argc, char *argv[])
+GameEngine::GameEngine(int argc, char *argv[], Platform * platform)
 {
-    (void)argc;
-    (void)argv;
+    (void) argc;
+    (void) argv;
+
+    setPlatform(platform);
+
     m_engineMode = ModeTestbed;
     m_gameState = GameStarted;
+
 }
 
-void GameEngine::initBox2D(int velocityIterations, int positionIterations, double timeStep) {
-    std::cout << __PRETTY_FUNCTION__ << " called" << std::endl;
+void GameEngine::initBox2D(int velocityIterations, int positionIterations, double timeStep, double pixPrMeter) {
+
+    setPixPrMeter(pixPrMeter);
 
     m_platform->setAdvanceTimerInterval(timeStep);
     m_platform->stopAdvanceTimer();
@@ -67,12 +74,10 @@ void GameEngine::redraw() {
     for(unsigned int i = 0; i < entities.size(); ++i) {
         Entity* entity = entities.at(i);
 
-        m_scale = 10;
-        // scaling should be redone
-        double x = entity->body()->GetPosition().x * m_scale;
-        double y = entity->body()->GetPosition().y * m_scale;
-        double width = entity->width() * m_scale;
-        double height = entity->height() * m_scale;
+        double x = entity->body()->GetPosition().x * pixPrMeter();
+        double y = entity->body()->GetPosition().y * pixPrMeter();
+        double width = entity->width() * pixPrMeter();
+        double height = entity->height() * pixPrMeter();
         platform()->drawSprite(entity->sprite(), x, y, width, height, entity->body()->GetAngle());
     }
 }
@@ -84,7 +89,7 @@ std::vector<Entity*> GameEngine::getEntitiesFromID(int ID)
 
     for (unsigned int i = 0; i < entities.size(); ++i) {
         Entity* entity_i = entities.at(i);
-        const int* ID_i = entity_i->getIdentifyer();
+        const int* ID_i = entity_i->identifyer();
 
         if (ID_i == NULL){
             continue;
@@ -121,11 +126,12 @@ void GameEngine::exitGame()
 void GameEngine::onMouseReleased(int x, int y)
 {
     std::cout << b2Vec2(x,y).x << " " << b2Vec2(x,y).y << std::endl;
-    b2Vec2 position;
-    position.x = x / m_scale;
-    position.y = y / m_scale;
 
-    double radius = 1 + (Sprite::getNumberOfSprites()%20)/5;
+    b2Vec2 position;
+    position.x = x / pixPrMeter();
+    position.y = y / pixPrMeter();
+
+    double radius = 1 + (entities.size()%20)/5;
 
     SvennisAwesomeBall *ball = new SvennisAwesomeBall(this, position, radius);
     ball->body()->SetLinearVelocity(b2Vec2(1,2));

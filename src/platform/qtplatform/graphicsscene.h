@@ -32,7 +32,7 @@ private:
     void keyPressEvent(QKeyEvent *event);
 
     QtPlatform *m_platform;
-    GameEngine *m_gameEngine;
+    GameEngine * gameEngine();
 };
 
 #endif // GRAPHICSSCENE_H

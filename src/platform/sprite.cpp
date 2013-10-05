@@ -1,9 +1,6 @@
 #include "sprite.h"
 
-Sprite::Sprite() :
-    ID(staticID++)
+Sprite::Sprite()
 {
 
 }
-
-unsigned int Sprite::staticID = 0;
