@@ -1,7 +1,5 @@
 #include "boxentity.h"
 
-#include "platform/platform.h"
-
 BoxEntity::BoxEntity(GameEngine *engine, const b2Vec2 &position, std::string spriteName, double width, double height, bool dynamic) :
     Entity(engine, position, spriteName, new b2PolygonShape, width, height, dynamic)
 {
